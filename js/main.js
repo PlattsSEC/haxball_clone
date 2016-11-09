@@ -1,5 +1,5 @@
 var myCircle = new Path.Circle(new Point(100, 70), 50);
-myCircle({});
+myCircle['fillColor'] = 'red';
 
 myCircle.strokeColor = 'black';
 
