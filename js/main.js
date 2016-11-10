@@ -28,7 +28,15 @@ function onKeyDown(event){
 	
 	}
 
+	if((myCircle.getIntersections(main_ball)).length > 0){
+		arr = myCircle.getIntersections(main_ball);
+		console.log(arr);
+		main_ball.position.x += 1;
 
-
+	}
 
 }
+
+
+var main_ball = new Path.Circle(new Point(180,90), 10);
+main_ball.strokeColor = 'black';
