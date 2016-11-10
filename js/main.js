@@ -1,29 +1,31 @@
-var myCircle = new Path.Circle(new Point(100, 70), 50);
+var myCircle = new Path.Circle(new Point(150, 70), 20);
 myCircle['fillColor'] = 'red';
 
 myCircle.strokeColor = 'black';
 
-
-var myCircle2 = myCircle.clone()
-myCircle.strokecolor = 'red';
-myCircle2.position.x += 200;
-
 function onKeyDown(event){
 
 	if(event.key == 'w'){
-		myCircle2.position.y -= 10;
+		myCircle.position.y -= 15;
 	}
 
 	if(event.key == 'a'){
-		myCircle2.position.x -= 10;
+		myCircle.position.x -= 15;
 	}
 
 	if(event.key == 'd'){
-		myCircle2.position.x += 10;
+		myCircle.position.x += 15;
 	}
 	
 	if(event.key == 's'){
-		myCircle2.position.y += 10;
+		myCircle.position.y += 15;
+	}
+
+	if(event.key == 'w' && event.key == 'd'){
+	
+		myCircle.position.x += 5;
+		myCircle.position.y -= 5;
+	
 	}
 
 
