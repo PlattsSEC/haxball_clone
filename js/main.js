@@ -30,13 +30,18 @@ function onKeyDown(event){
 
 	if((myCircle.getIntersections(main_ball)).length > 0){
 		arr = myCircle.getIntersections(main_ball);
-		console.log(arr);
-		main_ball.position.x += 1;
+		console.log([main_ball.segments[1].point.x,main_ball.segments[0].point.y]);
+		main_ball.position.x += 10;
 
 	}
 
 }
 
 
-var main_ball = new Path.Circle(new Point(180,90), 10);
+var main_ball = new Path.Circle({
+	center: [250,100],
+	radius: 10
+});
 main_ball.strokeColor = 'black';
+//console.log("Here is the center");
+//console.log(main_ball);
