@@ -2,6 +2,13 @@ var myCircle = new Path.Circle(new Point(150, 70), 20);
 myCircle['fillColor'] = 'red';
 myCircle.strokeColor = 'black';
 
+var moveUp = false;
+var moveDown = false;
+var moveLeft = false;
+var moveRight = false;
+
+var velocity = 3;
+
 function straight_line(ball,circle,sign){
 	if(sign == '+'){
 		y = ((circle[0] + 20) - ball[0])*(circle[1] - ball[1])/(circle[0] - ball[0]);
@@ -13,29 +20,49 @@ function straight_line(ball,circle,sign){
 };
 
 
+
+
+function gameLoop()
+{
+	while(true){
+		movePlayer();
+		//gameLoop()
+	}
+}
+
+
+function onFrame(event)
+{
+	if(moveUp){
+		myCircle.position.y -= velocity;
+	}
+	if(moveDown){
+		myCircle.position.y += velocity;
+	}
+	if(moveLeft){
+		myCircle.position.x -= velocity;
+	}
+	if(moveRight){
+		myCircle.position.x += velocity;
+	}
+}
+
 function onKeyDown(event){
 
 	if(event.key == 'w'){
-		myCircle.position.y -= 15;
+		moveUp = true;
 	}
 
 	if(event.key == 'a'){
-		myCircle.position.x -= 15;
+		moveLeft = true;
 	}
 
 	if(event.key == 'd'){
-		myCircle.position.x += 15;
+		moveRight = true;
 	}
 	
 	if(event.key == 's'){
-		myCircle.position.y += 15;
-	}
-
-	if(event.key == 'w' && event.key == 'd'){
-	
-		myCircle.position.x += 5;
-		myCircle.position.y -= 5;
-	
+		moveDown = true;
 	}
 
 	if((myCircle.getIntersections(main_ball)).length > 0){
@@ -51,9 +78,34 @@ function onKeyDown(event){
 		}
 		
 	}
+	movePlayer();
 
 }
 
+function onKeyUp(event)
+{
+	if(event.key == 'w'){
+		moveUp = false;
+		    
+	}
+
+	if(event.key == 'a'){
+		moveLeft = false;
+		    
+	}
+
+	if(event.key == 'd'){
+		moveRight = false;
+		    
+	}
+
+	if(event.key == 's'){
+		moveDown = false;
+		    
+	}
+
+	
+}
 
 var main_ball = new Path.Circle({
 	center: [250,100],
@@ -61,3 +113,5 @@ var main_ball = new Path.Circle({
 });
 
 main_ball.strokeColor = 'black';
+
+//gameLoop();
