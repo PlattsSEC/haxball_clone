@@ -12,30 +12,22 @@ function straight_line(ball,circle,sign){
 	return y;
 };
 
+function update() {
 
-function onKeyDown(event){
-
-	if(event.key == 'w'){
+	if (keysPressed.indexOf('w') != -1) {
 		myCircle.position.y -= 15;
 	}
 
-	if(event.key == 'a'){
+	if (keysPressed.indexOf('a') != -1) {
 		myCircle.position.x -= 15;
 	}
 
-	if(event.key == 'd'){
+	if (keysPressed.indexOf('d') != -1) {
 		myCircle.position.x += 15;
 	}
 	
-	if(event.key == 's'){
+	if (keysPressed.indexOf('s') != -1) {
 		myCircle.position.y += 15;
-	}
-
-	if(event.key == 'w' && event.key == 'd'){
-	
-		myCircle.position.x += 5;
-		myCircle.position.y -= 5;
-	
 	}
 
 	if((myCircle.getIntersections(main_ball)).length > 0){
@@ -51,7 +43,21 @@ function onKeyDown(event){
 		}
 		
 	}
+}
 
+setInterval(update, 1000.0/30.0);
+
+var keysPressed = [];
+
+function onKeyUp(event) {
+	var keyIndex = keysPressed.indexOf(event.key);
+	if (keyIndex != -1)
+		keysPressed.splice(keyIndex, 1);
+}
+
+function onKeyDown(event){
+	if (keysPressed.indexOf(event.key) == -1)
+		keysPressed.push(event.key);
 }
 
 
