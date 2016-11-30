@@ -12,6 +12,8 @@ function onKeyDown(event){
 }
 
 function Ball(settings) {
+	this.type = "Ball";
+
 	this._settings = {
 		radius: 12.5,
 		fill: "blue",
@@ -56,6 +58,8 @@ Ball.prototype.update = function() {
 };
 
 function Player(settings) {
+	this.type = "Player";
+
 	this.updateSettings(settings || {
 		fill: "red",
 		stroke: "black",
@@ -140,12 +144,13 @@ Player.prototype.update = function() {
 
 	for (var i = 0; i < spritesCollision.length; i++) {
 		var sprite = spritesCollision[i];
-		if (sprite.name == "Ball") {
+		if (sprite.type == "Ball") {
 			if (this._circle.getIntersections(sprite._circle).length > 0) {
 				sprite.speed.up = this.speed.up * 1.25;
 				sprite.speed.down = this.speed.down * 1.25;
 				sprite.speed.left = this.speed.left * 1.25;
 				sprite.speed.right = this.speed.right * 1.25;
+				$debug.append("Ball Hit<br>");
 			}
 		}
 	}
