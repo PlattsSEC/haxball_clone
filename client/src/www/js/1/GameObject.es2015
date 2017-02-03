@@ -1,0 +1,24 @@
+class GameObject {
+
+	get type() {
+		return "None";
+	}
+	
+	get defaultSettings() {
+		return {};
+	}
+
+	constructor(settings) {
+		this._settings = this.defaultSettings;
+		this.updateSettings(settings);
+		this.init();
+	}
+
+	init() { }
+	deinit() {}
+	update() {}
+
+	updateSettings(settings) {
+		$.extend(true, this._settings, settings);
+	}
+}

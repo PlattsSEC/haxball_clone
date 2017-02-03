@@ -4,6 +4,7 @@ window.onload = function() {
 	var canvas = document.getElementById('myCanvas');
 	paper.setup(canvas);
 	papertool = new paper.Tool();
+	papertool.view.setViewSize(1280, 720);
 	papertool.onKeyUp = onKeyUp;
 	papertool.onKeyDown = onKeyDown;
 	gameInit();

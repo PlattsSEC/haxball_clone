@@ -1,0 +1,38 @@
+class GameLayer extends GameObject {
+	get defaultSettings() {
+		return {
+			opacity: 1,
+			visible: true
+		}
+	}
+
+	init() {
+		this._group = new paper.Group();
+		this._initFinish = true;
+		this.updateSettings();
+	}
+
+	updateSettings(settings) {
+		if (settings) super.updateSettings(settings);
+		if (this._initFinish) {
+			this._group.opacity = this._settings.opacity;
+			this._group.visible = this._settings.visible;
+		}
+	}
+}
+
+class ImageLayer extends GameLayer {
+	get defaultSettings() {
+		return $.extend({
+			image: "bgImage"
+		}, super.defaultSettings);
+	}
+
+	init() {
+		super.init();
+
+		this._image = new paper.Raster(this._settings.image);
+		this._image.position = paper.view.center;
+		this._group.addChild(this._image);
+	}
+}

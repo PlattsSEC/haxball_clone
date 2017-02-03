@@ -20,15 +20,30 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+    html,
+    body {
+        margin: 0;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    /* Scale canvas with resize attribute to full size */
+    canvas {
+        width: 100%;
+        height: auto;
+    }
+    </style>
   </head>
   <body>
   <span style="position: fixed;">Debug Info<br><span id="debug"></span></span>
+    <img src="./img/bgImage.png" id="bgImage" style="display:none"/>
     <canvas id="myCanvas" width="1280" height="720"></canvas>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="./js/jquery-1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <!-- Latest compiled and minified JavaScript -->
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>  </body> -->
+    <script src="./js/jquery-1.12.4/jquery.min.js"></script>
     <script src="./js/paperjs-v0.10.2/dist/paper-full.js"></script>
     <script src="./js/script.min.js"></script>
   </body>

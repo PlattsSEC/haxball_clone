@@ -1,0 +1,57 @@
+class BallObject extends GameObject {
+	get type() {
+		return "Ball";
+	}
+
+	get defaultSettings() {
+		return {
+			startPos: {
+				x: 640,
+				y: 360
+			},
+			startPosEntropy: {
+				max: 120,
+				offset: 60 
+			},
+			radius: 12.5,
+			fill: "blue",
+			stroke: "black",
+			deceleration: 0.5
+		}
+	}
+
+	init() {
+		this._dirs = ["up", "down", "left", "right"];
+		this._speed = {
+			up: 0, down: 0, left: 0, right: 0
+		};
+		this._createCircle();
+	}
+
+	_createCircle() {
+		this._circle = new paper.Path.Circle({
+			center: [
+				this._settings.startPos.x - this._settings.startPosEntropy.offset +
+					Math.round(Math.random() * this._settings.startPosEntropy.max),
+				this._settings.startPos.y - this._settings.startPosEntropy.offset +
+					Math.round(Math.random() * this._settings.startPosEntropy.max),
+			],
+			radius: this._settings.radius,
+			fillColor: this._settings.fill,
+			strokeColor: this._settings.stroke
+		});
+	}
+
+	update() {
+		for (var i = 0; i < 4; i++) {
+			var dir = this._dirs[i];
+
+			this._speed[dir] -= this._settings.deceleration;
+			
+			this._speed[dir] = Math.max(0, this._speed[dir]);
+		}
+
+		this._circle.position.x += this._speed.right - this._speed.left;
+		this._circle.position.y += this._speed.down - this._speed.up;
+	}
+}

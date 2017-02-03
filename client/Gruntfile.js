@@ -50,8 +50,11 @@ config.babel = {
 };
 config.babel.www = {
 	files: [{
-		src: WWW_SRC + 'js/**/*.es2015',
-		dest: WWW_TMP + "js/babel.es2015.js"
+		"expand": true,
+		"cwd": WWW_SRC + "js/",
+		"src": ["**/*.es2015"],
+		"dest": WWW_TMP + "js/",
+		"ext": ".js"
 	}]
 };
 
@@ -62,7 +65,7 @@ config.uglify = {
     }
 };
 config.uglify.www = {
-	src: [WWW_SRC + 'js/**/*.js', WWW_TMP + "babel.es2015.js"],
+	src: [WWW_SRC + 'js/**/*.js', WWW_TMP + 'js/**/*.js'],
 	dest: WWW_BUILD + "js/script.min.js"
 };
 

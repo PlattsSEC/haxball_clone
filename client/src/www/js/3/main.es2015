@@ -1,0 +1,63 @@
+var papertool;
+
+window.onload = function() {
+	var canvas = document.getElementById('myCanvas');
+	paper.setup(canvas);
+	papertool = new paper.Tool();
+	papertool.view.setViewSize(1280, 720);
+	papertool.onKeyUp = onKeyUp;
+	papertool.onKeyDown = onKeyDown;
+	gameInit();
+	setInterval(update, 1000.0/60.0);
+}
+
+var keysPressed = [];
+
+function onKeyUp(event) {
+	var keyIndex = keysPressed.indexOf(event.key);
+	if (keyIndex != -1)
+		keysPressed.splice(keyIndex, 1);
+}
+
+function onKeyDown(event){
+	if (keysPressed.indexOf(event.key) == -1)
+		keysPressed.push(event.key);
+}
+
+var background, player1, player2, ballMain, spritesCollision, sprites, $debug;
+
+function gameInit() {
+	background = new ImageLayer();
+	player1 = new PlayerObject({
+		startPos: {
+			x: 400
+		}
+	});
+	player2 = new PlayerObject({
+		startPos: {
+			x: 880
+		},
+		fill: "green",
+		stroke: "black",
+		keys: {
+			up: "i",
+			down: "k",
+			left: "j",
+			right: "l",
+			dash: ";",
+		}
+	});
+	spritesCollision = [];
+	for (let i = 0; i < 50; i++)
+		spritesCollision.push(new BallObject());
+	sprites = spritesCollision.concat([background, player1, player2]);
+
+	$debug = $("#debug");
+}
+
+function update() {
+	$debug.html("keysPressed: " + keysPressed + "<br>");
+	for (var i = 0; i < sprites.length; i++)
+		sprites[i].update(this);
+	paper.view.draw();
+}

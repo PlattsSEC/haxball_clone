@@ -1,0 +1,109 @@
+class PlayerObject extends GameObject {
+	get type() {
+		return "Player";
+	}
+
+	get defaultSettings() {
+		return {
+			startPos: {
+				x: 640,
+				y: 360
+			},
+			fill: "red",
+			stroke: "black",
+			name: "N/A",
+			radius: 40,
+			keys: {
+				up: "w",
+				down: "s",
+				left: "a",
+				right: "d",
+				dash: "shift",
+			},
+			acceleration: {
+				normal: 1,
+				dashStart: 16,
+				dash: 0
+			},
+			deceleration: {
+				normal: 0.5,
+				dashStart: 0.75,
+				dash: 1
+			},
+			speedMax: {
+				normal: 7,
+				dashStart: 12,
+				dash: 12
+			}
+		}
+	}
+
+	init() {
+		this._state = "normal";
+		this._dirs = ["up", "down", "left", "right"];
+		this._speed = {
+			up: 0, down: 0, left: 0, right: 0
+		};
+		this._moving = false;
+		this._createCircle();
+	}
+
+	_createCircle() {
+		this._circle = new paper.Path.Circle({
+			center: [this._settings.startPos.x, this._settings.startPos.y],
+			radius: this._settings.radius,
+			fillColor: this._settings.fill,
+			strokeColor: this._settings.stroke
+		});
+	}
+
+	update() {
+		if ((this._state == "normal") && keysPressed.includes(this._settings.keys.dash))
+			this._state = "dashStart";
+
+		this._moving = false;
+		for (var i = 0; i < 4; i++) {
+			var dir = this._dirs[i];
+
+			if (keysPressed.includes(this._settings.keys[dir]))
+				this._speed[dir] += this._settings.acceleration[this._state];
+
+			this._speed[dir] -= this._settings.deceleration[this._state];
+			
+			this._speed[dir] = Math.min(
+				Math.max(0, this._speed[dir]),
+				this._settings.speedMax[this._state]
+			);
+
+		}
+		$debug.append("State: " + this._state + "<br>");	
+		$debug.append("x: " + this._circle.getPosition().x + "<br>");	
+		$debug.append("y: " + this._circle.getPosition().y + "<br>");	
+
+		if (this._state == "dashStart")
+			this._state = "dash";
+
+		this._moving =
+			((this._speed.right - this._speed.left) != 0) ||
+			((this._speed.down - this._speed.up) != 0);
+
+		if (!this._moving && (this._state == "dash"))
+			this._state = "normal";
+
+		for (var i = 0; i < spritesCollision.length; i++) {
+			var sprite = spritesCollision[i];
+			if (sprite.type == "Ball") {
+				if (this._circle.getIntersections(sprite._circle).length > 0) {
+					sprite._speed.up = this._speed.up * 1.25;
+					sprite._speed.down = this._speed.down * 1.25;
+					sprite._speed.left = this._speed.left * 1.25;
+					sprite._speed.right = this._speed.right * 1.25;
+					$debug.append("Ball Hit<br>");
+				}
+			}
+		}
+
+		this._circle.position.x += this._speed.right - this._speed.left;
+		this._circle.position.y += this._speed.down - this._speed.up;
+	}
+}
